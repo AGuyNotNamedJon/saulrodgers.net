@@ -1,0 +1,119 @@
+baseURL = "https://saulrodgers.net/"
+defaultContentLanguage = "en"
+# Automatically generate robots.txt
+enableRobotsTXT = true
+languageCode = "en"
+theme = "gokarna"
+title = "Saul Rodgers"
+
+[params]
+  subtitle = 'What\u0027s the worst that could happen?'
+
+  # Choose the color shown when hyperlinks are hovered over
+  accentColor = "#FF4D4D"
+
+  # Resource URL for the site avatar (home page and header)
+  avatarURL = "/avatar/Saul-Head_Vector.webp"
+
+  # Describe the avatar for screen readers
+  avatarAltText = "avatar"
+
+  # Set the avatar's size: size-xs, size-s, size-m, size-l & size-xl
+  avatarSize = "size-m"
+
+  # Inject arbitrary HTML via the <head> tag
+  # Best used for importing custom JavaScript, CSS, or analytics
+  customHeadHTML = '''
+    <script defer src="https://spy.simplepengu.com/script.js" data-website-id="d719e04b-128d-4cea-ba7d-7e69ca7f74db"></script>
+  '''
+
+  # Configure how post dates are displayed
+  dateFormat = "January 2, 2006"
+  
+  # Home page meta description
+  description = "Passionate about Entra ID, Intune, and Exchange Online. Exploring Azure, PowerShell, and Python."
+
+  # Footer text (i.e. author/project name)
+  footer = "Saul Rodgers"
+
+  # Define SEO keywords
+  metaKeywords = ["blog", "Saul Rodgers", "Intune", "Exchange", "Entra", "Azure", "PowerShell", "Python"]
+
+  # Define how many posts are displayed on the home page
+  # showPostsOnHomePage must be "popular" or "recent"
+  numberPostsOnHomePage = 5
+
+  # Display a "back to top" button on posts and pages: true, false
+  # May not render on smaller screen sizes
+  showBackToTopButton = true
+
+  # Display posts on the home page:
+  # "popular" (order posts by weight)
+  # "recent" (order posts by date)
+  # "", unset (do not display)
+  showPostsOnHomePage = ""
+
+  # Show the previous and next post in your timeline: "true", "false"
+  # Incompatible with Weight
+  togglePreviousAndNextButtons = false
+
+  socialIcons = [
+      {name = "linkedin", url = "https://www.linkedin.com/in/saulrodgers/"},
+      {name = "github", url = "https://github.com/AGuyNotNamedJon"},
+      {name = "qrz", url = "https://www.qrz.com/db/vk6cia"},
+    ]
+
+[menu]
+  [[menu.main]]
+    # Display name
+    name = "Posts"
+
+    # Relative URL slug (appended to baseURL)
+    url = "/posts/"
+
+    # Lower weights are listed first in the menu (leftmost); higher weights are
+    # listed last in the menu (rightmost)
+    weight = 1
+
+  [[menu.main]]
+    # Display name
+    name = "Tags"
+
+    # Relative URL slug (appended to baseURL)
+    url = "/tags/"
+
+    # Lower weights are listed first in the menu (leftmost); higher weights are
+    # listed last in the menu (rightmost)
+    weight = 2
+    
+  [[menu.main]]
+    # Unique identifiers are required for menu entries without a name property,
+    # or for menu entries which re-use a name
+    identifier = "github"
+
+    # Absolute URL to external resource
+    url = "https://github.com/AGuyNotNamedJon"
+    weight = 3
+    
+    # Surround the menu entry (or name) with HTML content, such as Feather
+    # icons: https://feathericons.com
+    pre = "<span data-feather='github'></span>"
+    post = ""
+
+  [[menu.main]]
+    # Unique identifiers are required for menu entries without a name property,
+    # or for menu entries which re-use a name
+    identifier = "linkedin"
+
+    # Absolute URL to external resource
+    url = "https://www.linkedin.com/in/saulrodgers/"
+    weight = 3
+    
+    # Surround the menu entry (or name) with HTML content, such as Feather
+    # icons: https://feathericons.com
+    pre = "<span data-feather='linkedin'></span>"
+    post = ""
+
+[minify]
+    # Any CSS, JS, JSON, HTML, SVG, or XML resource can be minified using resources.Minify which takes for argument the resource object.
+    minifyOutput = true
