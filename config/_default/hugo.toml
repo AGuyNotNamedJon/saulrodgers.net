@@ -24,11 +24,11 @@ title = "Saul Rodgers"
   # Inject arbitrary HTML via the <head> tag
   # Best used for importing custom JavaScript, CSS, or analytics
   customHeadHTML = '''
-    <script defer src="https://spy.simplepengu.com/script.js" data-website-id="d719e04b-128d-4cea-ba7d-7e69ca7f74db"></script>
+    <script defer src="https://spy.simplepengu.com/script.js" data-website-id="d719e04b-128d-4cea-ba7d-7e69ca7f74db"> integrity="sha512-3v7pF9QslfOhDzePukIf4ZfmXRM9GwrrJse6Nx2h3rECjxSNMvDPaKPSRrW1p8+dzU4lfIH9IFsxf2BGLL+q9A==" crossorigin="anonymous"></script>
   '''
 
   # Configure how post dates are displayed
-  dateFormat = "January 2, 2006"
+  dateFormat = "Mon, 02 Jan 2006"
   
   # Home page meta description
   description = "Passionate about Entra ID, Intune, and Exchange Online. Exploring Azure, PowerShell, and Python."
@@ -37,7 +37,7 @@ title = "Saul Rodgers"
   footer = "Saul Rodgers"
 
   # Define SEO keywords
-  metaKeywords = ["blog", "Saul Rodgers", "Intune", "Exchange", "Entra", "Azure", "PowerShell", "Python"]
+  metaKeywords = ["blog", "Saul", "Saul Rodgers", "Intune", "Exchange", "Entra", "Azure", "PowerShell", "Python"]
 
   # Define how many posts are displayed on the home page
   # showPostsOnHomePage must be "popular" or "recent"
@@ -114,6 +114,11 @@ title = "Saul Rodgers"
     pre = "<span data-feather='linkedin'></span>"
     post = ""
 
-[minify]
-    # Any CSS, JS, JSON, HTML, SVG, or XML resource can be minified using resources.Minify which takes for argument the resource object.
-    minifyOutput = true
+[markup]
+  [markup.tableOfContents]
+    startLevel = 1
+    endLevel = 3
+    ordered = false
+
+[taxonomies]
+  tag = 'tags'
