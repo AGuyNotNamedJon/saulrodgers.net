@@ -3,9 +3,10 @@ title = "Azure Noob Part 1 - Getting things started"
 date = "2025-02-20"
 draft = "true"
 type = "post"
-tags = [ "Azure", "Hugo", "Noob" ]
+tags = [ "Azure", "Hugo", "Noob", "Blog" ]
 description = "How I am learning the basics of Azure and it's services with-in."
-categories = [ ]
+categories = [ "Azure", "Blog" ]
+series = [ "Azure Noob" ]
 +++
 ## Getting Started with Building a Hugo Website on Azure
 

@@ -1,10 +1,13 @@
 baseURL = "https://saulrodgers.net/"
 defaultContentLanguage = "en"
-# Automatically generate robots.txt
-enableRobotsTXT = true
 languageCode = "en"
 theme = "gokarna"
 title = "Saul Rodgers"
+
+# Automatically generate robots.txt
+enableRobotsTXT = true
+
+enableEmoji = true
 
 [params]
   subtitle = 'What\u0027s the worst that could happen?'
@@ -114,6 +117,20 @@ title = "Saul Rodgers"
     pre = "<span data-feather='linkedin'></span>"
     post = ""
 
+  [[menu.main]]
+    # Unique identifiers are required for menu entries without a name property,
+    # or for menu entries which re-use a name
+    identifier = "rss"
+
+    # Absolute URL to external resource
+    url = "https://saulrodgers.net/index.xml"
+    weight = 3
+    
+    # Surround the menu entry (or name) with HTML content, such as Feather
+    # icons: https://feathericons.com
+    pre = "<span data-feather='rss'></span>"
+    post = ""
+
 [markup]
   [markup.tableOfContents]
     startLevel = 1
@@ -121,4 +138,7 @@ title = "Saul Rodgers"
     ordered = false
 
 [taxonomies]
-  tag = 'tags'
+  category = "categories"
+  series = "series"
+  tag = "tags"
+  author = "authors"
