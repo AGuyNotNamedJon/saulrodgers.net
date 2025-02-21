@@ -1,0 +1,19 @@
++++
+title = "About Me"
+description = "About me"
+date = "2025-02-20"
+preview = ""
+draft = "true"
+tags = []
+categories = []
+type = "post"
+series = ""
++++
+
+Hi, I'm Saul Rodgers — an IT professional with a passion for troubleshooting, automation, and security. My journey into IT began with a deep curiosity for how systems interact and a love for problem-solving. Over the years, I’ve developed expertise in Microsoft Intune, Exchange Online, and Entra ID, while actively expanding my knowledge in Defender, Purview, and Azure to stay ahead in the evolving cloud landscape.  
+
+I’m particularly interested in automation and efficiency, which led me to heavily integrate PowerShell scripting into my workflow. I maintain a [PowerShell repository](https://github.com/AGuyNotNamedJon/PowerShellScripts), where I share useful scripts for for my work or projects alike. More recently, I’ve been exploring Python to push automation even further, especially in areas like GUI development and IT workflow optimization.  
+
+Beyond tech, I’m an amateur radio operator (VK6CIA), which allows me to experiment with communication technology and signal propagation. I also have an interest in lockpicking, a hobby that, much like IT security, involves understanding systems, weaknesses, and how to overcome challenges with precision and patience.  
+
+This blog serves as a space where I document my learning journey, share insights, and experiment with new ideas. Whether it's troubleshooting complex IT issues, scripting automation solutions, or exploring new security concepts, I'm always looking for ways to improve and refine my approach.

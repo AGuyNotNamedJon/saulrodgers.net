@@ -11,6 +11,10 @@
     {
       "title": "projects",
       "path": "[[workspace]]/content/projects"
+    },
+    {
+      "title": "content",
+      "path": "[[workspace]]/content"
     }
   ],
   "frontMatter.taxonomy.contentTypes": [

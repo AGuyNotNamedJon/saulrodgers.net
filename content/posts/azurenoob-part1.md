@@ -1,13 +1,15 @@
 +++
 title = "Azure Noob Part 1 - Getting things started"
+description = "Getting started learning the basics of Azure and it's services with-in."
 date = "2025-02-20"
+preview = ""
 draft = "true"
-type = "post"
 tags = [ "Azure", "Hugo", "Noob", "Blog" ]
-description = "How I am learning the basics of Azure and it's services with-in."
-categories = [ "Azure", "Blog" ]
+categories = []
+type = "posts"
 series = [ "Azure Noob" ]
 +++
+
 ## Getting Started with Building a Hugo Website on Azure
 
 In this guide, I'll walk through the steps to set up your environment for building a Hugo website using Azure. We'll cover installing necessary tools, setting up Azure resources, and creating your first Hugo site.
