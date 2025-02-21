@@ -1,6 +1,0 @@
-[submodule "themes/gokarna"]
-	path = themes/gokarna
-	url = https://github.com/gokarna-theme/gokarna-hugo.git
-[submodule "themes/hugo-coder"]
-	path = themes/hugo-coder
-	url = https://github.com/luizdepra/hugo-coder.git
