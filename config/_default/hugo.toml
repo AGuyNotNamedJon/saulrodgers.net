@@ -87,6 +87,30 @@ customJS = []
 # Custom remote JS files
 customRemoteJS = []
 
+# 404 Page Configuration
+[params.error404]
+# Toggle kaomoji display
+enableKaomoji = true
+# Options: "custom", "generic", "none"
+messages = "custom"
+# List of emotions to use. Leave empty to use all
+# Available: professional, helpful, content, apologetic, confused, tableflip, unflip, annoyed, frustrated, jedi
+emotions = [
+  "generic",
+  "professional",
+  "helpful",
+  "content",
+  "apologetic",
+  "helpful",
+  "confused",
+  "tableflip",
+  "unflip",
+  "annoyed",
+  "frustrated",
+  "jedi"
+]
+jediChance = 0.01           # Decimal chance (0-1) for Jedi kaomoji if enabled
+
 # If you want to use fathom(https://usefathom.com) for analytics, add this section
 # [params.fathomAnalytics]
 # siteID = "ABCDE"
