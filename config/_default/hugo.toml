@@ -202,11 +202,16 @@ icon = "fa-brands fa-linkedin fa-2x"
 weight = 2
 url = "https://www.linkedin.com/in/saulrodgers/"
 
+[[params.social]]
+name = "LinkedIn"
+icon = "fa-brands fa-keybase fa-2x"
+weight = 3
+url = "https://keybase.io/saulrodgers"
 
 [[params.social]]
 name = "RSS"
 icon = "fa-solid fa-rss fa-2x"
-weight = 3
+weight = 4
 url = "https://saulrodgers.net/index.xml"
 rel = "alternate"
 type = "application/rss+xml"
