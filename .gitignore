@@ -38,3 +38,8 @@ hugo.linux
 ### Obsidian ###
 # config dir
 .obsidian/
+
+
+### Front Matter ###
+.frontmatter/*
+frontmatter.json
