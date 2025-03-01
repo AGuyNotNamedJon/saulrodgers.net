@@ -16,6 +16,10 @@ hugo.linux
 # Theme Submodules
 /themes/*.diff
 
+### Front Matter ###
+.frontmatter/*
+frontmatter.json
+
 ### VSCode ###
 .vscode/*
 !.vscode/settings.json
@@ -39,7 +43,3 @@ hugo.linux
 # config dir
 .obsidian/
 
-
-### Front Matter ###
-.frontmatter/*
-frontmatter.json
