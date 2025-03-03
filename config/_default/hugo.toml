@@ -226,10 +226,10 @@ author = "authors"
 [languages.en]
 languageName = ":uk:"
 
-[[languages.en.menu.main]]
-name = "About"
-weight = 1
-url = "about/"
+#[[languages.en.menu.main]]
+#name = "About"
+#weight = 1
+#url = "about/"
 
 [[languages.en.menu.main]]
 name = "Blog"
@@ -240,11 +240,6 @@ url = "posts/"
 name = "Projects"
 weight = 3
 url = "projects/"
-
-[[languages.en.menu.main]]
-name = "Contact me"
-weight = 5
-url = "contact/"
 
 [outputs]
 home = ['html', 'rss']
