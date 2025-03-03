@@ -90,8 +90,9 @@ jobs:
       # The --no-wait flag makes this non-blocking (doesn't wait for purge to complete)
       - name: Purge Azure CDN Resources
         uses: azure/CLI@v1  # Official Azure CLI action
-        run:
-          az afd endpoint purge --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --profile-name ${{ secrets.AZURE_CDN_PROFILE_NAME }} --endpoint-name ${{ secrets.AZURE_CDN_ENDPOINT }} --domains ${{ env.BASE_URL }} --content-paths '/*' --no-wait true
+        with:
+          inlineScript: |
+            az afd endpoint purge --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --profile-name ${{ secrets.AZURE_CDN_PROFILE_NAME }} --endpoint-name ${{ secrets.AZURE_CDN_ENDPOINT }} --domains ${{ env.BASE_URL }} --content-paths '/*' --no-wait true
 
       # Step 7: Logout from Azure (cleanup)
       # Properly close the Azure CLI session for security best practices
