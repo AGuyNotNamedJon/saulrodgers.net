@@ -35,7 +35,7 @@ env:
   # The base URL for the Hugo site
   BASE_: "saulrodgers.net"
   # Specific Hugo version to ensure consistent builds
-  HUGO_VERSION: "0.111.3"
+  HUGO_VERSION: "0.144.1"
   # Azure CLI version to use (latest will use the most recent version)
   AZURE_CLI_VERSION: "latest"
 
