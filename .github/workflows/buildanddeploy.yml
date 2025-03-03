@@ -1,75 +1,102 @@
 name: "Hugo to Azure Storage Blob Deployment"
 
-# This GitHub Action workflow triggers in three scenarios - 
+# This GitHub Action workflow triggers in three scenarios -
 # 1. When a push is made to the main branch
 # 2. When a pull request is either opened, synchronized, reopened,
 #    or closed, and the target is the main branch.
-# 3. When a workflow dispatch is triggered.
+# 3. When a workflow dispatch is triggered (manual run from GitHub UI).
 
+# The 'on' section defines all the events that trigger this workflow
 on:
+  # Trigger on pushes to the main branch
   push:
     branches:
       - main
-#      - staging
+
+  # Trigger on pull request events to the main branch
   pull_request:
+    # Specific PR events that will trigger this workflow:
+    # - opened: when a new PR is created
+    # - synchronize: when new commits are pushed to the PR
+    # - reopened: when a closed PR is reopened
+    # - closed: when a PR is closed (merged or declined)
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
-#      - staging
-#  schedule:
-#    - cron: '0 0 * * 0'
+
+#  schedule:  # Schedule the workflow to run at a specific time, if needed.
+#    - cron: '0 0 * * 0'  # Would run at midnight every Sunday if uncommented
+
+  # Allows manual triggering of the workflow from GitHub UI
   workflow_dispatch:
 
 # Environment variables used for consistency across the workflow.
-env:
-  BASE_URL: 'https://saulrodgers.net'
-  HUGO_VERSION: '0.144.1'
-  AZURECLI_VERSION: 'latest'
+  # The base URL for the Hugo site
+  # Specific Hugo version to ensure consistent builds
+  # Azure CLI version to use (latest will use the most recent version)
 
+# Jobs define the actual work to be done
 jobs:
+  # Single job that handles both building and deploying the site
   build-and-deploy:
+    # Specifies the runner environment (Ubuntu latest version)
     runs-on: ubuntu-latest
+    # Sequential steps to execute as part of this job
     steps:
+      # Step 1: Check out the repository code
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  # Official GitHub checkout action
         with:
-          submodules: recursive
+          submodules: recursive  # Also checkout any Git submodules (e.g., Hugo themes)
 
+      # Step 2: Set up Hugo with the specified version
       - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
+        uses: peaceiris/actions-hugo@v2  # Community action for Hugo setup
         with:
-          hugo-version: ${{ env.HUGO_VERSION }}
-          extended: true
+          hugo-version: ${{ env.HUGO_VERSION }}  # Use version from environment variables
+          extended: true  # Use Hugo Extended version (required for SCSS/SASS processing)
 
+      # Step 3: Authenticate with Azure using service principal
       - name: Setup Azure Service Principal
-        uses: azure/login@v1.1
+        uses: azure/login@v1.1  # Official Azure login action
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}  # Service principal credentials stored in GitHub secrets
 
+      # Step 4: Build the Hugo site
+      # Minify the site's output (HTML, CSS, JS, JSON, XML) and set the base URL from environment variables
       - name: Build Project
         run: |
           hugo \
           --minify \
-          --baseURL "${{ env.BASE_URL }}/"
+          --baseURL "${{ env.BASE_URL }}"
 
+      # Step 5: Publish the built site to GitHub Pages (optional backup/preview)
       - name: Release Assets
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v3  # Community action for GitHub Pages deployment
         with:
-          personal_token: ${{ secrets.TOKEN }}
-          publish_dir: ./public
+          personal_token: ${{ secrets.TOKEN }}  # GitHub personal access token stored in secrets
+          publish_dir: ./public  # Directory containing the built site (Hugo output)
 
+      # Step 6: Deploy to Azure Blob Storage
+      # First delete all existing blobs in the $web container (clean deployment)
+      # Then upload all files from the Hugo public directory to the $web container
       - name: Upload Assets To Azure Blob Storage
-        uses: azure/CLI@v1
+        uses: azure/CLI@v1  # Official Azure CLI action
         with:
-          azcliversion: ${{ env.AZURECLI_VERSION }}
+          azcliversion: ${{ env.AZURECLI_VERSION }}  # Use version from environment variables
           inlineScript: |
             az storage blob delete-batch -s "\$web" --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
             az storage blob upload-batch -d "\$web" -s ./public --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
 
+      # Step 7: Purge the Azure CDN cache to ensure latest content is served
+      # Purge all content paths in the CDN endpoint to ensure visitors see the latest version
+      # The --no-wait flag makes this non-blocking (doesn't wait for purge to complete)
       - name: Purge Azure CDN Resources
         run:
           az cdn endpoint purge -n ${{ secrets.AZURE_CDN_ENDPOINT }} --profile-name ${{ secrets.AZURE_CDN_PROFILE_NAME }} --content-paths "/*" --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --no-wait
 
+      # Step 8: Logout from Azure (cleanup)
+      # Properly close the Azure CLI session for security best practices
       - name: Dispose Azure Service Principal Session
         run: |
           az logout
