@@ -92,7 +92,12 @@ jobs:
         uses: azure/CLI@v1  # Official Azure CLI action
         with:
           inlineScript: |
-            az afd endpoint purge --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --profile-name ${{ secrets.AZURE_CDN_PROFILE_NAME }} --endpoint-name ${{ secrets.AZURE_CDN_ENDPOINT }} --domains ${{ env.BASE_URL }} --content-paths '/*' --no-wait true
+            az afd endpoint purge \
+            --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
+            --profile-name ${{ secrets.AZURE_CDN_PROFILE_NAME }} \
+            --endpoint-name ${{ secrets.AZURE_CDN_ENDPOINT }} \
+            --domains ${{ env.BASE_URL }} \
+            --content-paths '/*'
 
       # Step 7: Logout from Azure (cleanup)
       # Properly close the Azure CLI session for security best practices
