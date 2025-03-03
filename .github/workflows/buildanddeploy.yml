@@ -74,14 +74,7 @@ jobs:
           --minify \
           --baseURL "https://${{ env.BASE_URL }}/"
 
-      # Step 5: Publish the built site to GitHub Pages (optional backup/preview)
-      - name: Release Assets
-        uses: peaceiris/actions-gh-pages@v3  # Community action for GitHub Pages deployment
-        with:
-          personal_token: ${{ secrets.TOKEN }}  # GitHub personal access token stored in secrets
-          publish_dir: ./public  # Directory containing the built site (Hugo output)
-
-      # Step 6: Deploy to Azure Blob Storage
+      # Step 5: Deploy to Azure Blob Storage
       # First delete all existing blobs in the $web container (clean deployment)
       # Then upload all files from the Hugo public directory to the $web container
       - name: Upload Assets To Azure Blob Storage
@@ -92,14 +85,15 @@ jobs:
             az storage blob delete-batch -s "\$web" --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
             az storage blob upload-batch -d "\$web" -s ./public --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
 
-      # Step 7: Purge the Azure CDN cache to ensure latest content is served
+      # Step 6: Purge the Azure CDN cache to ensure latest content is served
       # Purge all content paths in the CDN endpoint to ensure visitors see the latest version
       # The --no-wait flag makes this non-blocking (doesn't wait for purge to complete)
       - name: Purge Azure CDN Resources
+        uses: azure/CLI@v1  # Official Azure CLI action
         run:
           az afd endpoint purge --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --profile-name ${{ secrets.AZURE_CDN_PROFILE_NAME }} --endpoint-name ${{ secrets.AZURE_CDN_ENDPOINT }} --domains ${{ env.BASE_URL }} --content-paths '/*' --no-wait true
 
-      # Step 8: Logout from Azure (cleanup)
+      # Step 7: Logout from Azure (cleanup)
       # Properly close the Azure CLI session for security best practices
       - name: Dispose Azure Service Principal Session
         run: |
