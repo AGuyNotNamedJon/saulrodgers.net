@@ -33,7 +33,7 @@ on:
 # Environment variables used for consistency across the workflow.
 env:
   # The base URL for the Hugo site
-  BASE_: "saulrodgers.net"
+  BASE_URL: "saulrodgers.net"
   # Specific Hugo version to ensure consistent builds
   HUGO_VERSION: "0.144.1"
   # Azure CLI version to use (latest will use the most recent version)
