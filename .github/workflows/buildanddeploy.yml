@@ -31,9 +31,13 @@ on:
   workflow_dispatch:
 
 # Environment variables used for consistency across the workflow.
+env:
   # The base URL for the Hugo site
+  BASE_: "saulrodgers.net"
   # Specific Hugo version to ensure consistent builds
+  HUGO_VERSION: "0.111.3"
   # Azure CLI version to use (latest will use the most recent version)
+  AZURE_CLI_VERSION: "latest"
 
 # Jobs define the actual work to be done
 jobs:
@@ -53,7 +57,7 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2  # Community action for Hugo setup
         with:
-          hugo-version: ${{ env.HUGO_VERSION }}  # Use version from environment variables
+          hugo-version: $HUGO_VERSION  # Use version from environment variables
           extended: true  # Use Hugo Extended version (required for SCSS/SASS processing)
 
       # Step 3: Authenticate with Azure using service principal
@@ -68,7 +72,7 @@ jobs:
         run: |
           hugo \
           --minify \
-          --baseURL "https://${{ env.BASE_URL }}/"
+          --baseURL "https://$BASE_URL/"
 
       # Step 5: Publish the built site to GitHub Pages (optional backup/preview)
       - name: Release Assets
@@ -83,7 +87,7 @@ jobs:
       - name: Upload Assets To Azure Blob Storage
         uses: azure/CLI@v1  # Official Azure CLI action
         with:
-          azcliversion: latest
+          azcliversion: $AZURE_CLI_VERSION  # Use the specified Azure CLI version
           inlineScript: |
             az storage blob delete-batch -s "\$web" --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
             az storage blob upload-batch -d "\$web" -s ./public --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
@@ -93,7 +97,7 @@ jobs:
       # The --no-wait flag makes this non-blocking (doesn't wait for purge to complete)
       - name: Purge Azure CDN Resources
         run:
-          az afd endpoint purge --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --profile-name ${{ secrets.AZURE_CDN_PROFILE_NAME }} --endpoint-name ${{ secrets.AZURE_CDN_ENDPOINT }} --domains ${{ env.BASE_URL }} --content-paths '/*' --no-wait true
+          az afd endpoint purge --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --profile-name ${{ secrets.AZURE_CDN_PROFILE_NAME }} --endpoint-name ${{ secrets.AZURE_CDN_ENDPOINT }} --domains $BASE_URL --content-paths '/*' --no-wait true
 
       # Step 8: Logout from Azure (cleanup)
       # Properly close the Azure CLI session for security best practices
