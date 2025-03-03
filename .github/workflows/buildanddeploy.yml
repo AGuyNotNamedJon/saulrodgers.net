@@ -83,7 +83,7 @@ jobs:
       - name: Upload Assets To Azure Blob Storage
         uses: azure/CLI@v1  # Official Azure CLI action
         with:
-          azcliversion: ${{ env.AZURECLI_VERSION }}  # Use version from environment variables
+          azcliversion: latest
           inlineScript: |
             az storage blob delete-batch -s "\$web" --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
             az storage blob upload-batch -d "\$web" -s ./public --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
