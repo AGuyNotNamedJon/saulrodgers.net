@@ -1,0 +1,75 @@
+name: "Hugo to Azure Storage Blob Deployment"
+
+# This GitHub Action workflow triggers in three scenarios - 
+# 1. When a push is made to the main branch
+# 2. When a pull request is either opened, synchronized, reopened,
+#    or closed, and the target is the main branch.
+# 3. When a workflow dispatch is triggered.
+
+on:
+  push:
+    branches:
+      - main
+#      - staging
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
+#      - staging
+#  schedule:
+#    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+# Environment variables used for consistency across the workflow.
+env:
+  BASE_URL: 'https://saulrodgers.net'
+  HUGO_VERSION: '0.144.1'
+  AZURECLI_VERSION: 'latest'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: ${{ env.HUGO_VERSION }}
+          extended: true
+
+      - name: Setup Azure Service Principal
+        uses: azure/login@v1.1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Build Project
+        run: |
+          hugo \
+          --minify \
+          --baseURL "${{ env.BASE_URL }}/"
+
+      - name: Release Assets
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.TOKEN }}
+          publish_dir: ./public
+
+      - name: Upload Assets To Azure Blob Storage
+        uses: azure/CLI@v1
+        with:
+          azcliversion: ${{ env.AZURECLI_VERSION }}
+          inlineScript: |
+            az storage blob delete-batch -s "\$web" --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
+            az storage blob upload-batch -d "\$web" -s ./public --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
+
+      - name: Purge Azure CDN Resources
+        run:
+          az cdn endpoint purge -n ${{ secrets.AZURE_CDN_ENDPOINT }} --profile-name ${{ secrets.AZURE_CDN_PROFILE_NAME }} --content-paths "/*" --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --no-wait
+
+      - name: Dispose Azure Service Principal Session
+        run: |
+          az logout
