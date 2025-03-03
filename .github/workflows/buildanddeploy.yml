@@ -68,7 +68,7 @@ jobs:
         run: |
           hugo \
           --minify \
-          --baseURL "${{ env.BASE_URL }}"
+          --baseURL "https://${{ env.BASE_URL }}/"
 
       # Step 5: Publish the built site to GitHub Pages (optional backup/preview)
       - name: Release Assets
@@ -93,7 +93,7 @@ jobs:
       # The --no-wait flag makes this non-blocking (doesn't wait for purge to complete)
       - name: Purge Azure CDN Resources
         run:
-          az cdn endpoint purge -n ${{ secrets.AZURE_CDN_ENDPOINT }} --profile-name ${{ secrets.AZURE_CDN_PROFILE_NAME }} --content-paths "/*" --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --no-wait
+          az afd endpoint purge --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --profile-name ${{ secrets.AZURE_CDN_PROFILE_NAME }} --endpoint-name ${{ secrets.AZURE_CDN_ENDPOINT }} --domains ${{ env.BASE_URL }} --content-paths '/*' --no-wait true
 
       # Step 8: Logout from Azure (cleanup)
       # Properly close the Azure CLI session for security best practices
