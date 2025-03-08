@@ -190,18 +190,27 @@ enableEmoji = true
     icon = "fa-brands fa-github fa-2x"
     weight = 1
     url = "https://github.com/AGuyNotNamedJon"
+    showInHeader = false
 
   [[params.social]]
     name = "LinkedIn"
     icon = "fa-brands fa-linkedin fa-2x"
     weight = 2
     url = "https://www.linkedin.com/in/saulrodgers/"
+    showInHeader = false
 
   [[params.social]]
-    name = "LinkedIn"
+    name = "Keybase"
     icon = "fa-brands fa-keybase fa-2x"
     weight = 3
     url = "https://keybase.io/saulrodgers"
+    showInHeader = false
+
+  [params.rss]
+    icon = "fa-solid fa-rss"
+    url = "index.xml"
+    rel = "alternate"
+    type = "application/rss+xml"
 
 [taxonomies]
   category = "categories"
@@ -222,14 +231,11 @@ enableEmoji = true
       name = "Projects"
       weight = 2
       url = "projects/"
-    
-    [[languages.en.menu.main]]
-      name = "RSS"
-      icon = "fa-solid fa-rss fa-2x"
-      weight = 3
-      url = "index.xml"
-      rel = "alternate"
-      type = "application/rss+xml"
 
 [outputs]
   home = ['html', 'rss']
+  section = ['html', 'rss']
+  taxonomy = ['html']
+  term = ['html']
+
+
