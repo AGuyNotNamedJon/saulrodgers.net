@@ -5,7 +5,7 @@ date = "2025-02-20"
 preview = ""
 draft = "true"
 tags = [ "Azure", "Hugo", "Noob", "Blog" ]
-categories = []
+categories = [ "Azure" ]
 type = "posts"
 series = [ "Azure Noob" ]
 +++
