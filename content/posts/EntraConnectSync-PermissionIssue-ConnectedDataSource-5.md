@@ -18,18 +18,30 @@ While I have not been able to pinpoint the root cause of this error starting (wi
 
 To resolve this error you will need to open PowerShell as an administrator on the server running Entra ID Connect Sync and perfrom the following actions
 
-Import the PowerShell module for Entra ID Connect Sync.
+1. Import the PowerShell module for Entra ID Connect Sync
 
-    Import-Module "C:\Program Files\Microsoft Azure Active Directory Connect\AdSyncConfig\AdSyncConfig.psm1"
+```powershell
+Import-Module "C:\Program Files\Microsoft Azure Active Directory Connect\AdSyncConfig\AdSyncConfig.psm1"
+```
 
-Get the account name for the AD Connector. This account is most likely going to start with `MSOL_` unless you have chosen to customise this when setting it up.
+2. Get the account name for the AD Connector.
 
-    Get-ADSyncADConnectorAccount
+This account is most likely going to start with `MSOL_` unless you have chosen to customise this when setting it up.
 
-Assign the Group Writeback Permissions. Replace `[ADConnectorAccountName]` with the `MSOL_` account name and replace `[ADDomain]` with the domain of the on-premises Active Directory (E.g. `CORP.EXAMPLE.com` or `EXAMPLE.LOCAL`).
+```powershell
+Get-ADSyncADConnectorAccount
+```
 
-    Set-ADSyncUnifiedGroupWritebackPermissions -ADConnectorAccountName "[ADConnectorAccountName]" -ADConnectorAccountDomain "[ADDomain]"
+3. Assign the Group Writeback Permissions.
+
+Replace `[ADConnectorAccountName]` with the `MSOL_` account name and replace `[ADDomain]` with the domain of the on-premises Active Directory (E.g. `CORP.EXAMPLE.com` or `EXAMPLE.LOCAL`).
+
+```powershell
+Set-ADSyncUnifiedGroupWritebackPermissions -ADConnectorAccountName "[ADConnectorAccountName]" -ADConnectorAccountDomain "[ADDomain]"
+```
 
 As a full example for step 3 assuming the Account Name was "MSOL_abc123def567" and the domain of active directory was "EXAMPLE.LOCAL".
 
-    Set-ADSyncUnifiedGroupWritebackPermissions -ADConnectorAccountName "MSOL_abc123def567" -ADConnectorAccountDomain "EXAMPLE.LOCAL"
+```powershell
+Set-ADSyncUnifiedGroupWritebackPermissions -ADConnectorAccountName "MSOL_abc123def567" -ADConnectorAccountDomain "EXAMPLE.LOCAL"
+```
