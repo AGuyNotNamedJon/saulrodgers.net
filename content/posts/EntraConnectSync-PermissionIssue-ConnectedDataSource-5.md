@@ -1,6 +1,6 @@
 +++
 
-title = "Microsoft Entra ID Connect Sync - Connected data source error code "5" with "permission-issue"
+title = "Microsoft Entra ID Connect Sync - Connected data source error code 5"
 description = ""
 date = "2026-01-29"
 preview = ""
